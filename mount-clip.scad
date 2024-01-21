@@ -1,5 +1,6 @@
 include <components/components.scad>
 include <enclosure/lcd-screen-x240x240.scad>
+include <enclosure/lcd-screen-x160x80.scad>
 include <enclosure/ESP-prog.scad>
 include <enclosure/rotary-encoder.scad>
 include <enclosure/hd44780-lcd.scad>
@@ -15,8 +16,18 @@ include <enclosure/d1-mini-node-mcu.scad>
 include <enclosure/led-matrix.scad>
 include <enclosure/esp8285m2.scad>
 include <enclosure/servo.scad>
+include <enclosure/datalogger.scad>
+include <enclosure/lora.scad>
+include <enclosure/stepper.scad>
+include <enclosure/joystick.scad>
+include <enclosure/speaker.scad>
+include <enclosure/led-strip-driver.scad>
+include <enclosure/isd1820.scad>
+include <enclosure/hc-sr501.scad>
+include <enclosure/relay.scad>
+include <enclosure/cr2032.scad>
 
-$fn = 50;
+$fn = 100;
 
 
 module corner() {
@@ -121,7 +132,7 @@ module plate(x, y) {
     plate(6, 4);
 
     translate([10, 4, 0]) 
-        screenMount();
+        screenMount240x240();
 }
 
 
@@ -213,7 +224,7 @@ module plate(x, y) {
     plate(4, 12);
 
     translate([5, 5, 0])
-        batteryHolder();
+        batteryHolder1();
 }
 
 *drawComponents() {
@@ -272,10 +283,131 @@ module plate(x, y) {
     plate(7, 18);
 }
 
-drawComponents() {
-    plate(3, 4);
+*drawComponents() {
+    plate(11, 10);
+}
 
-    translate([7, 4, 0])
+
+*drawComponents() {
+    plate(4, 4);
+
+    translate([6, 4, 0])
+        bms360max();
+
+    translate([18, 4, 0])
         bms360max();
 }
 
+*drawComponents() {
+    plate(5, 5);
+
+    translate([7, 9, 0])
+        dataLogger();
+}
+
+
+*drawComponents() {
+    plate(4, 6);
+
+    translate([5, 4, 0])
+        lora();
+}
+
+
+*drawComponents() {
+    plate(5, 5);
+
+    translate([10, 10, 0])
+        rotate([0, 0, 45])
+            stepper36BYG();
+}
+
+
+*drawComponents() {
+    plate(4, 4);
+
+    translate([7, 5, 0]) 
+        screenMount160x80();
+}
+
+
+*drawComponents() {
+    plate(4, 5);
+
+    translate([10.1, 8, 0]) 
+        joystick();
+}
+
+*drawComponents() {
+    translate([-25, -25, 0])
+        plate(5, 5);
+
+    translate([0, 0, 0]) 
+        speaker1();
+}
+
+*drawComponents() {
+    speaker1_seal();
+}
+
+
+*drawComponents() {
+    plate(7, 7);
+
+    translate([4, 6, 0])
+        batteryHolder4AA();
+}
+
+*drawComponents() {
+    plate(6, 7);
+
+    translate([6.5, 6, 0])
+        batteryHolder3AA();
+}
+
+*drawComponents() {
+    plate(4, 7);
+
+    translate([4, 6, 0])
+        batteryHolder2AA();
+}
+
+*drawComponents() {
+    plate(4, 6);
+
+    translate([8, 9, 0])
+        ledStripDriver();
+}
+
+*drawComponents() {
+    plate(5, 5);
+
+    translate([(50-39)/2, (50-43)/2, 0])
+        isd1820();
+}
+
+
+*drawComponents() {
+    plate(3, 4);
+
+    translate([3, 4, 0])
+        hcsr501();
+}
+
+
+*drawComponents() {
+    // plate(3, 4);
+
+    translate([3, 4, 0])
+        relay1();
+}
+
+
+*drawComponents() {
+    relay1_seal();
+}
+
+
+drawComponents() {
+    cr2032_seal();
+}
