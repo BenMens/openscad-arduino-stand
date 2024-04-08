@@ -540,9 +540,9 @@ module plate(x, y) {
 drawComponents() {
     plate(5, 2);
 
-    *translate([25, 10, 0]) 
+    translate([25, 10, 0]) 
         voltmeter1();
 
-    translate([25, 10, -8]) 
+    *translate([25, 10, -8]) 
         voltmeter2();
 }
