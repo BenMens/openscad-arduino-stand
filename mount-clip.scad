@@ -5,11 +5,12 @@ include <enclosure/ESP-prog.scad>
 include <enclosure/rotary-encoder.scad>
 include <enclosure/hd44780-lcd.scad>
 include <enclosure/arduino-uno.scad>
+include <enclosure/arduino-mega.scad>
+include <enclosure/arduino-nano.scad>
 include <enclosure/dc-jack-socket.scad>
 include <enclosure/circuit-board-7x5.scad>
 include <enclosure/rfid-rc522.scad>
 include <enclosure/battery-holder.scad>
-include <enclosure/arduino-mega.scad>
 include <enclosure/samd21-M0-mini.scad>
 include <enclosure/antenna.scad>
 include <enclosure/d1-mini-node-mcu.scad>
@@ -26,9 +27,18 @@ include <enclosure/isd1820.scad>
 include <enclosure/hc-sr501.scad>
 include <enclosure/relay.scad>
 include <enclosure/cr2032.scad>
+include <enclosure/dip.scad>
+include <enclosure/matrix-keyboard.scad>
+include <enclosure/rtc-ds3231.scad>
+include <enclosure/sd-card-adapter.scad>
+include <enclosure/tea5767-fm-radio.scad>
+include <enclosure/stepper-driver.scad>
+include <enclosure/nrf24l01.scad>
+include <enclosure/ft232.scad>
+include <enclosure/pod-meter.scad>
+include <enclosure/voltmeter.scad>
 
 $fn = 100;
-
 
 module corner() {
     if ($componentMode == componentTarget_mass) {
@@ -59,13 +69,9 @@ module corner() {
         translate([-16, -5, 1.5])
             cube([10, 10, 3]);
 
-        // translate([-7, -1, 0])
-        //     cube([7, 1, 3]);
-
         translate([0, 0, -1])
             cylinder(10, 1.7, 1.7);
     }
-
 }
 
 
@@ -77,16 +83,16 @@ module plate(x, y) {
     if ($componentMode == componentTarget_mass) {
         difference() {
             union() {
-                translate([8, margin, 0]) 
+                translate([10, margin, 0]) 
                     cube([
-                        x * 10 - 16, 
+                        x * 10 - 20, 
                         y * 10 - 2 * margin, 
                         1.5]);
 
-                translate([margin, 8, 0]) 
+                translate([margin, 10, 0]) 
                     cube([
                         x * 10 - 2 * margin, 
-                        y * 10 - 16, 
+                        y * 10 - 20, 
                         1.5]);
 
                 translate([1 + margin, 1 + margin, 0]) 
@@ -96,7 +102,7 @@ module plate(x, y) {
                         1.5]);
             }
 
-            for (a = [2: 1 : x-2]) {
+            for (a = [1: 1 : x-1]) {
                 translate([a * 10, 0, -1])
                     cylinder(3, 1.5, 1.5);
 
@@ -104,7 +110,7 @@ module plate(x, y) {
                     cylinder(3, 1.5, 1.5);
             }
 
-            for (b = [2: 1 : y-2]) {
+            for (b = [1: 1 : y-1]) {
                 translate([0, b * 10, -1])
                     cylinder(3, 1.5, 1.5);
 
@@ -202,8 +208,10 @@ module plate(x, y) {
 *drawComponents() {
     plate(3, 3);
 
-    translate([9.5, 5, 0])
-        dcJackSocket();
+    translate([9.5, 5, 0]) {
+        dcJackSocket1();
+        //dcJackSocket1_Shield();
+    }
 }
 
 *drawComponents() {
@@ -404,10 +412,137 @@ module plate(x, y) {
 
 
 *drawComponents() {
-    relay1_seal();
+    plate(5, 7);
+
+    translate([7.5, 5, 0]) {
+        relay1();
+
+        *relay1_seal();
+    } 
 }
 
 
+*drawComponents() {
+    plate(4, 5);
+
+    translate([2.5, 7, 0]) 
+        cr2032();
+
+    *translate([2.5, 7, 0]) 
+        cr2032_seal();
+
+}
+
+
+*drawComponents() {
+    plate(2, 4);
+
+    translate([1, 2.5, 0]) {
+        dip8();
+
+        *dip8_seal();
+    }
+}
+
+*drawComponents() {
+    // plate(6, 6);
+
+    // translate([2.8, 5, 0]) 
+    //     matrixKeboard();
+
+    pilarCornerFix(5);
+}
+
+*drawComponents() {
+    plate(5, 3);
+
+    translate([8, 3.5, 0]) 
+        rtcDS3231();
+}
+
+*drawComponents() {
+    plate(5, 3);
+
+    translate([4, 3, 0]) 
+        microCardAdapter();
+}
+
+
+*drawComponents() {
+    plate(4, 5);
+
+    translate([5, 14, 0]) 
+        tea5767FmRadio();
+}
+
+*drawComponents() {
+    plate(5, 4);
+
+    translate([8, 4, 0]) 
+        stepperDriver();
+}
+
+*drawComponents() {
+    plate(4, 5);
+
+    translate([8, 5, 0]) {
+        nrf24l01();
+
+        // nrf24l01_seal();
+    }
+}
+
+*drawComponents() {
+    plate(4, 6);
+
+    translate([11, 7, 0]) {
+        ft232();
+    }
+}
+
+*drawComponents() {
+    plate(5, 6);
+}
+
+*difference() {
+    cylinder(h = 3.5, r=5);
+
+    translate([0, 0, -0.05]) 
+    servo_head(SERVO_SPLINE, 0);
+    cylinder(h = 10, r = 1);
+}
+
+*drawComponents() {
+    plate(3, 3);
+
+    translate([5, 4.5, 0])
+        podMeter();
+
+    translate([5, 4.5, 0])
+        podMeterLid();
+
+}
+
+*drawComponents() {
+    plate(7, 7);
+
+    translate([2, 1.5, 0])
+        ledMatrixWS2811();
+}
+
+*drawComponents() {
+    plate(6, 3);
+
+    translate([8.5, 6, 0])
+        arduinoNano();
+}
+
 drawComponents() {
-    cr2032_seal();
+    plate(5, 2);
+
+    *translate([25, 10, 0]) 
+        voltmeter1();
+
+    translate([25, 10, -8]) 
+        voltmeter2();
 }
