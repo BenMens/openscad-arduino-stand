@@ -37,6 +37,7 @@ include <enclosure/nrf24l01.scad>
 include <enclosure/ft232.scad>
 include <enclosure/pod-meter.scad>
 include <enclosure/voltmeter.scad>
+include <enclosure/esp-cam.scad>
 
 $fn = 100;
 
@@ -295,17 +296,6 @@ module plate(x, y) {
     plate(11, 10);
 }
 
-
-*drawComponents() {
-    plate(4, 4);
-
-    translate([6, 4, 0])
-        bms360max();
-
-    translate([18, 4, 0])
-        bms360max();
-}
-
 *drawComponents() {
     plate(5, 5);
 
@@ -504,14 +494,6 @@ module plate(x, y) {
     plate(5, 6);
 }
 
-*difference() {
-    cylinder(h = 3.5, r=5);
-
-    translate([0, 0, -0.05]) 
-    servo_head(SERVO_SPLINE, 0);
-    cylinder(h = 10, r = 1);
-}
-
 *drawComponents() {
     plate(3, 3);
 
@@ -537,7 +519,7 @@ module plate(x, y) {
         arduinoNano();
 }
 
-drawComponents() {
+*drawComponents() {
     plate(5, 2);
 
     translate([25, 10, 0]) 
@@ -546,3 +528,26 @@ drawComponents() {
     *translate([25, 10, -8]) 
         voltmeter2();
 }
+
+*difference() {
+    cylinder(h = 3.5, r=5);
+
+    translate([0, 0, -0.05]) 
+    servo_head(SERVO_SPLINE, 0);
+    cylinder(h = 10, r = 1);
+}
+
+*drawComponents() {
+    plate(4, 4);
+
+    translate([6, 4, 0])
+        bms306maxCase1();
+
+    translate([18, 4, 0])
+        bms306maxCase1();
+}
+
+*drawComponents() {
+    bms306max();
+}
+
